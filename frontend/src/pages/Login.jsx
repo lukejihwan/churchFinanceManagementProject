@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api, setSession } from '../api';
+import './Login.css';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -28,48 +29,57 @@ export default function Login() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '48px auto', padding: 24, background: '#fff', borderRadius: 12, boxShadow: '0 1px 3px rgba(0,0,0,.08)' }}>
-      <h1 style={{ marginTop: 0, fontSize: '1.35rem' }}>로그인</h1>
-      <form onSubmit={handleSubmit}>
-        <label style={{ display: 'block', marginBottom: 8, fontSize: 14 }}>이메일</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-          style={{ width: '100%', padding: 10, marginBottom: 16, borderRadius: 8, border: '1px solid #ccc' }}
-        />
-        <label style={{ display: 'block', marginBottom: 8, fontSize: 14 }}>비밀번호</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoComplete="current-password"
-          style={{ width: '100%', padding: 10, marginBottom: 16, borderRadius: 8, border: '1px solid #ccc' }}
-        />
-        {error && <p style={{ color: '#b91c1c', fontSize: 14 }}>{error}</p>}
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: '100%',
-            padding: 12,
-            background: '#1e3a5f',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 8,
-            cursor: loading ? 'wait' : 'pointer',
-            fontWeight: 600,
-          }}
-        >
-          {loading ? '처리 중…' : '로그인'}
-        </button>
-      </form>
-      <p style={{ marginTop: 16, fontSize: 14 }}>
-        계정이 없으면 <Link to="/register">회원가입</Link>
-      </p>
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-brand" aria-hidden>
+          ✦
+        </div>
+        <h1 className="login-title">로그인</h1>
+        <p className="login-subtitle">재정 청구 시스템에 로그인하여 예산·청구를 관리하세요.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="login-field">
+            <label className="login-label" htmlFor="login-email">
+              이메일
+            </label>
+            <input
+              id="login-email"
+              className="login-input"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+              placeholder="name@example.com"
+            />
+          </div>
+          <div className="login-field">
+            <label className="login-label" htmlFor="login-password">
+              비밀번호
+            </label>
+            <input
+              id="login-password"
+              className="login-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+            />
+          </div>
+          {error && (
+            <p className="login-error" role="alert">
+              {error}
+            </p>
+          )}
+          <button className="login-submit" type="submit" disabled={loading}>
+            {loading ? '처리 중…' : '로그인'}
+          </button>
+        </form>
+        <p className="login-footer">
+          계정이 없으신가요? <Link to="/register">회원가입</Link>
+        </p>
+      </div>
     </div>
   );
 }
